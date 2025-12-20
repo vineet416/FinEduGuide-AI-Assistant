@@ -75,11 +75,6 @@ if user_query:
                 generated_content = response.json()
                 st.markdown(generated_content)
                 st.download_button("Download Content", data=str(generated_content), file_name="generated_content.txt")
-
-                # Collect user feedback
-                feedback = st.radio("Was this content helpful?", ("👍 Yes", "👎 No"))
-                if feedback:
-                    st.write("Thank you for your feedback!")
             else:
                 st.error(response.json().get("error", "Failed to generate content"))
     except (ConnectionError, Timeout):
