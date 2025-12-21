@@ -153,4 +153,3 @@ async def generate_content(
     except CustomException as e:
         logging.error(f"Content generation failed: {str(e)}")
         return JSONResponse(status_code=500, content={"error": "Failed to generate content"})
-        
