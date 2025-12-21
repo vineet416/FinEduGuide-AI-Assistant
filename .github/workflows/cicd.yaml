@@ -75,12 +75,13 @@ jobs:
 
       - name: Stop and remove old containers on port 8080
         run: |
-          docker ps -q --filter "publish=8080" | ForEach-Object { docker stop $_ }
-          docker ps -aq --filter "publish=8080" | ForEach-Object { docker rm $_ }
+          # Stop containers using port 8080
+          docker ps -q --filter "publish=8080" | xargs -r docker stop || true
+          # Remove stopped containers
+          docker ps -aq --filter "publish=8080" | xargs -r docker rm || true
         continue-on-error: true
-        shell: pwsh
 
-      - name: Clean up dangling containers (alternative cleanup)
+      - name: Clean up dangling containers
         run: |
           docker container prune -f
         continue-on-error: true
