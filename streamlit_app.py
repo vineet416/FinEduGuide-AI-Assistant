@@ -4,7 +4,7 @@ from requests.exceptions import ConnectionError, Timeout
 
 
 # Configuration
-FASTAPI_BASE_URL = "http://localhost:8000"
+FASTAPI_BASE_URL = st.secrets["FASTAPI_BASE_URL"]
 REQUEST_TIMEOUT = 300  # seconds
 
 # Upload File helper function
