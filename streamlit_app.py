@@ -5,7 +5,7 @@ from requests.exceptions import ConnectionError, Timeout
 
 # Configuration
 FASTAPI_BASE_URL = st.secrets["FASTAPI_BASE_URL"]
-REQUEST_TIMEOUT = 300  # seconds
+REQUEST_TIMEOUT = 60  # seconds
 
 # Upload File helper function
 def upload_file_to_api(file, pdf_processing_method=None):
@@ -76,6 +76,6 @@ if user_query:
                 st.markdown(generated_content)
                 st.download_button("Download Content", data=str(generated_content), file_name="generated_content.txt")
             else:
-                st.error(response.json().get("error", "Failed to generate content"))
+                st.error(response.json().get("error", "Failed to generate content. Check if API server is running."))
     except (ConnectionError, Timeout):
         st.error("FastAPI server is not reachable. Make sure it is running.")
