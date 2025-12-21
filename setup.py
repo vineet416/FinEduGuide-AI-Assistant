@@ -13,6 +13,10 @@ def get_requirements(file_path: str) -> List[str]:
 
     if HYPHEN_E_DOT in requirements:
         requirements.remove(HYPHEN_E_DOT)
+    
+    # Filter out pip options (lines starting with --)
+    requirements = [req for req in requirements if req and not req.startswith("--")]
+    
     return requirements
 
 setup(
