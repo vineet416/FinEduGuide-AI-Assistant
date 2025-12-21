@@ -11,14 +11,6 @@ on:
       - 'setup.py'
       - 'data/**'
       - '.github/workflows/**'
-    paths-ignore:
-      - 'README.MD'
-      - 'README.md'
-      - '*.md'
-      - 'docs/**'
-      - '.gitignore'
-      - 'LICENSE'
-      - 'streamlit_app.py'
 
 
 jobs:
