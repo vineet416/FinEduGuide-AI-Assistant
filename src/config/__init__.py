@@ -12,8 +12,8 @@ class Config:
     TEMPERATURE = 0.3
 
     PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
-    PINECONE_INDEX_NAME = os.getenv('PINECONE_INDEX_NAME')
+    PINECONE_INDEX_NAME = 'fineduguide-index'
 
-    AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
-    AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
-    AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
+    AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_BUCKET_NAME = 'fineduguide-bucket'
