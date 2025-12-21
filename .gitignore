@@ -208,3 +208,6 @@ __marimo__/
 
 # Large Data folders
 data/
+
+# Streamlit secrets 
+.streamlit/secrets.toml
