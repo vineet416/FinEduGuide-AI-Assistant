@@ -15,13 +15,16 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file
-COPY requirements.txt .
+# Copy requirements file and setup files
+COPY requirements.txt setup.py ./
+
+# Copy source code (needed for -e . in requirements.txt)
+COPY src/ ./src/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Copy rest of application code
 COPY . .
 
 # Expose port for FastAPI
