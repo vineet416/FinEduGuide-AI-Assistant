@@ -64,3 +64,6 @@ dist/
 *.tmp
 .temp/
 temp/
+
+# Large Data folders
+data/
