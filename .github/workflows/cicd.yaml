@@ -3,6 +3,22 @@ name: Deploy Application Docker Image to EC2 instance
 on:
   push:
     branches: [main]
+    paths:
+      - 'main.py'
+      - 'src/**'
+      - 'requirements.txt'
+      - 'Dockerfile'
+      - 'setup.py'
+      - 'data/**'
+      - '.github/workflows/**'
+    paths-ignore:
+      - 'README.MD'
+      - 'README.md'
+      - '*.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'streamlit_app.py'
 
 
 jobs:
@@ -65,21 +81,18 @@ jobs:
         run: |
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Stop and remove old container
-        continue-on-error: true
+      - name: Stop and remove old containers on port 8080
         run: |
-          docker stop fineduguide-app || true
-          docker rm fineduguide-app || true
+          docker ps -q --filter "publish=8080" | ForEach-Object { docker stop $_ }
+          docker ps -aq --filter "publish=8080" | ForEach-Object { docker rm $_ }
+        continue-on-error: true
+        shell: pwsh
+
+      - name: Clean up dangling containers (alternative cleanup)
+        run: |
+          docker container prune -f
+        continue-on-error: true
 
       - name: Run Docker Image to serve users
         run: |
-          docker run -d \
-            --name fineduguide-app \
-            --restart unless-stopped \
-            -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" \
-            -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
-            -e AWS_DEFAULT_REGION="${{ secrets.AWS_DEFAULT_REGION }}" \
-            -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" \
-            -e EURIAI_API_KEY="${{ secrets.EURIAI_API_KEY }}" \
-            -p 8080:8080 \
-            ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
+         docker run -d -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ secrets.AWS_DEFAULT_REGION }}" -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" -e EURIAI_API_KEY="${{ secrets.EURIAI_API_KEY }}" -p 8080:8080 ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
