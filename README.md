@@ -136,6 +136,10 @@ The FastAPI backend provides the following endpoints:
 
 **Swagger Documentation**: Visit `/docs` endpoint for interactive API testing
 
+## 🏗️ Architecture Diagram    
+
+![FinEduGuide Architecture Diagram](https://github.com/vineet416/FinEduGuide-AI-Assistant/blob/main/FinEduGuide%20Architecture%20Diagram.png?raw=true)
+
 ## 🚀 Deployment
 
 ### **Production Deployment**
